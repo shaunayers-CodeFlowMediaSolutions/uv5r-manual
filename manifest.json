@@ -1,15 +1,18 @@
 {
-  "name": "UV-5R Mini Manual",
-  "short_name": "UV5R Mini",
-  "start_url": "index.html",
+  "name": "UV-5R Squad Pro",
+  "short_name": "SquadComms",
+  "description": "Field manual and squad frequencies for Baofeng UV-5R Mini",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f2f2f7",
-  "theme_color": "#007aff",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#ff9500",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/1085/1085814.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
