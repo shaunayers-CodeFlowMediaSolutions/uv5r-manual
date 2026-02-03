@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UV-5R Mini Field Guide</title>
+    <style>
+        :root { 
+            --primary: #007aff; 
+            --bg: #f2f2f7; 
+            --card: #ffffff; 
+            --text: #1c1c1e;
+        }
+        body { 
+            font-family: -apple-system, system-ui, sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            margin: 0; 
+            padding: 15px; 
+            line-height: 1.4;
+        }
+        .header { 
+            position: sticky; 
+            top: 0; 
+            background: var(--bg); 
+            padding: 10px 0; 
+            z-index: 100;
+        }
+        input#menuSearch { 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid #ccc; 
+            box-sizing: border-box; 
+            font-size: 17px; /* Prevents iOS zoom on focus */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .section-title { font-size: 13px; color: #8e8e93; text-transform: uppercase; margin: 20px 0 8px 5px; font-weight: 600; }
+        .card { 
+            background: var(--card); 
+            border-radius: 12px; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+        }
+        .quick-row { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0; }
+        .quick-row:last-child { border-bottom: none; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        td { padding: 12px 5px; border-top: 1px solid #eee; font-size: 15px; }
+        .num { font-weight: 800; color: var(--primary); width: 35px; }
+        .desc { font-weight: 500; }
+        .opt { font-size: 13px; color: #666; text-align: right; }
+        
+        code { background: #e5e5ea; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-family: monospace; }
+        .highlight { color: #d70015; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <input type="text" id="menuSearch" onkeyup="searchMenu()" placeholder="Search (e.g. 'Power', 'SQL', '13')...">
+</div>
+
+<div class="section-title">Emergency / Quick Start</div>
+<div class="card">
+    <div class="quick-row"><span>Unlock</span><code>Long-Press *</code></div>
+    <div class="quick-row"><span>VFO/Memory</span><code>VFO/MR (Red)</code></div>
+    <div class="quick-row"><span>Scan On</span><code>Long-Press *</code></div>
+    <div class="quick-row"><span>Reverse Freq</span><code>Press * (Brief)</code></div>
+</div>
+
+<div class="section-title">Full Menu Reference</div>
+<div class="card">
+    <table id="menuTable">
+        <thead><tr style="display:none;"><th>#</th><th>Setting</th><th>Options</th></tr></thead>
+        <tbody>
+            <tr><td class="num">0</td><td class="desc">SQL (Squelch)</td><td class="opt">0-9</td></tr>
+            <tr><td class="num">1</td><td class="desc">STEP (Freq Step)</td><td class="opt">2.5K-50K</td></tr>
+            <tr><td class="num">2</td><td class="desc">TXP (Power)</td><td class="opt">HIGH / LOW</td></tr>
+            <tr><td class="num">3</td><td class="desc">SAVE (Bat Save)</td><td class="opt">1:1 - 1:4</td></tr>
+            <tr><td class="num">5</td><td class="desc">W/N (Wide/Narr)</td><td class="opt">25K / 12.5K</td></tr>
+            <tr><td class="num">7</td><td class="desc">TDR (Dual Watch)</td><td class="opt">ON / OFF</td></tr>
+            <tr><td class="num">8</td><td class="desc">BEEP (Key Tone)</td><td class="opt">ON / OFF</td></tr>
+            <tr><td class="num">10</td><td class="desc">R-DCS (Rec Tone)</td><td class="opt">Digital</td></tr>
+            <tr><td class="num">11</td><td class="desc">R-CTCS (Rec Tone)</td><td class="opt">Analog</td></tr>
+            <tr><td class="num">13</td><td class="desc">T-CTCS (TX Tone)</td><td class="opt">Analog</td></tr>
+            <tr><td class="num">14</td><td class="desc">VOICE (Prompts)</td><td class="opt">ENG / OFF</td></tr>
+            <tr><td class="num">21</td><td class="desc">MDF-A (Ch Name)</td><td class="opt">FREQ / NAME</td></tr>
+            <tr><td class="num">27</td><td class="desc">MEM-CH (Store)</td><td class="opt">000 - 127</td></tr>
+            <tr><td class="num">28</td><td class="desc">DEL-CH (Delete)</td><td class="opt">000 - 127</td></tr>
+            <tr><td class="num">33</td><td class="desc">BAND (VHF/UHF)</td><td class="opt">VHF / UHF</td></tr>
+            <tr><td class="num">40</td><td class="desc">RESET (Wipe)</td><td class="opt">VFO / ALL</td></tr>
+            <tr><td class="num">41</td><td class="desc">Bluetooth</td><td class="opt">Mini Only</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+function searchMenu() {
+    var input = document.getElementById("menuSearch");
+    var filter = input.value.toUpperCase();
+    var tr = document.getElementById("menuTable").getElementsByTagName("tr");
+    for (var i = 1; i < tr.length; i++) {
+        var textValue = tr[i].textContent || tr[i].innerText;
+        tr[i].style.display = textValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+    }
+}
+</script>
+
+</body>
+</html>
