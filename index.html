@@ -6,119 +6,104 @@
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>UV-5R Mini Pro</title>
+    <title>UV-5R Mini Squad Pro</title>
     <style>
-        :root {
-            --bg: #f2f2f7;
-            --accent: #ff9500;
-            --card-bg: #ffffff;
-            --text-main: #1c1c1e;
-            --text-muted: #8e8e93;
-            --search-bg: #e3e3e8;
-            --border: #f2f2f7;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #000000;
-                --accent: #ffa500;
-                --card-bg: #1c1c1e;
-                --text-main: #ffffff;
-                --text-muted: #a1a1a6;
-                --search-bg: #2c2c2e;
-                --border: #2c2c2e;
-            }
-        }
-
-        * { -webkit-tap-highlight-color: transparent; user-select: none; box-sizing: border-box; }
-        input { user-select: auto !important; }
-
-        body { 
-            font-family: -apple-system, system-ui, sans-serif; 
-            background-color: var(--bg); color: var(--text-main);
-            margin: 0; padding: env(safe-area-inset-top) 16px 40px 16px;
-            overscroll-behavior: none;
-        }
-
-        .header { position: sticky; top: 0; background: var(--bg); padding: 20px 0 10px 0; z-index: 100; }
-        h1 { font-size: 24px; font-weight: 700; margin: 0 0 10px 0; }
-
-        .search-container {
-            background: var(--search-bg); border-radius: 10px;
-            display: flex; align-items: center; padding: 12px;
-        }
-
-        input#menuSearch {
-            background: transparent; border: none; width: 100%;
-            font-size: 17px; outline: none; color: var(--text-main);
-        }
-
-        .section-label {
-            font-size: 13px; color: var(--text-muted);
-            text-transform: uppercase; margin: 20px 0 8px 4px; font-weight: 600;
-        }
-
-        .card { background: var(--card-bg); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); overflow: hidden; margin-bottom: 12px; }
-
-        .list-item { display: flex; align-items: center; padding: 14px 16px; border-bottom: 0.5px solid var(--border); }
-        .list-item:last-child { border-bottom: none; }
-
-        .menu-id { background: var(--accent); color: #000; font-weight: 800; min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; margin-right: 15px; font-size: 13px; }
-        .menu-name { flex-grow: 1; font-weight: 500; font-size: 15px; }
-        .menu-opt { color: var(--accent); font-size: 13px; text-align: right; font-weight: 600; }
-
-        code { font-family: monospace; background: var(--search-bg); padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+        :root { --bg: #f2f2f7; --accent: #ff9500; --card: #ffffff; --text: #1c1c1e; --border: #e5e5ea; }
+        @media (prefers-color-scheme: dark) { :root { --bg: #000; --accent: #ffa500; --card: #1c1c1e; --text: #fff; --border: #2c2c2e; } }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px 16px 50px 16px; overscroll-behavior: none; }
+        .header { position: sticky; top: 0; background: var(--bg); padding: 10px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+        h1 { font-size: 22px; margin: 0 0 10px 0; }
+        input#search { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ccc; background: var(--card); color: var(--text); font-size: 16px; outline: none; }
+        .section-label { font-size: 12px; color: #8e8e93; text-transform: uppercase; margin: 25px 0 8px 5px; font-weight: 700; }
+        .card { background: var(--card); border-radius: 14px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); overflow: hidden; }
+        .row { display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        .row:last-child { border-bottom: none; }
+        .freq { font-family: monospace; color: var(--accent); font-weight: 700; }
+        
+        /* Accordion */
+        details { border-bottom: 1px solid var(--border); }
+        details:last-child { border-bottom: none; }
+        summary { padding: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+        summary::after { content: '＋'; color: var(--accent); font-weight: bold; }
+        details[open] summary::after { content: '－'; }
+        .content { padding: 0 16px 16px 16px; font-size: 14px; line-height: 1.6; color: var(--text); }
+        code { background: rgba(255,149,0,0.1); color: var(--accent); padding: 2px 4px; border-radius: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>UV-5R Mini Field Guide</h1>
-    <div class="search-container">
-        <input type="text" id="menuSearch" onkeyup="filter()" placeholder="Search (e.g. 'SQL', 'Tone', '13')...">
-    </div>
+    <h1>Squad Comms Center</h1>
+    <input type="text" id="search" onkeyup="doSearch()" placeholder="Search manual or channels...">
 </div>
 
-<div class="section-label">Quick Actions</div>
-<div class="card">
-    <div class="list-item"><div class="menu-name">Unlock Keypad</div><div class="menu-opt">Hold <code>*</code> or <code>#</code></div></div>
-    <div class="list-item"><div class="menu-name">VFO/Memory Mode</div><div class="menu-opt">Press <code>VFO/MR</code></div></div>
-    <div class="list-item"><div class="menu-name">Weather Mode</div><div class="menu-opt">Hold <code>0</code></div></div>
-    <div class="list-item"><div class="menu-name">Start Scan</div><div class="menu-opt">Hold <code>*</code></div></div>
-    <div class="list-item"><div class="menu-name">FM Radio</div><div class="menu-opt">Press <code>CALL</code></div></div>
+<div class="section-label">⚡ Squad Channels</div>
+<div class="card" id="squadZone">
+    <div class="row"><span>Squad Alpha (Primary)</span><span class="freq">462.6250</span></div>
+    <div class="row"><span>Squad Bravo (Backup)</span><span class="freq">467.6250</span></div>
+    <div class="row"><span>Tactical / Command</span><span class="freq">151.8200</span></div>
 </div>
 
-<div class="section-label">Full Menu Reference</div>
-<div class="card" id="menuList">
-    <div class="list-item"><div class="menu-id">0</div><div class="menu-name">SQL (Squelch)</div><div class="menu-opt">0-9</div></div>
-    <div class="list-item"><div class="menu-id">1</div><div class="menu-name">STEP (Freq Step)</div><div class="menu-opt">2.5K-50K</div></div>
-    <div class="list-item"><div class="menu-id">2</div><div class="menu-name">TXP (TX Power)</div><div class="menu-opt">HIGH/LOW</div></div>
-    <div class="list-item"><div class="menu-id">3</div><div class="menu-name">SAVE (Bat Save)</div><div class="menu-opt">1:1-1:4</div></div>
-    <div class="list-item"><div class="menu-id">4</div><div class="menu-name">VOX (Voice Act)</div><div class="menu-opt">OFF-10</div></div>
-    <div class="list-item"><div class="menu-id">5</div><div class="menu-name">W/N (Wide/Narr)</div><div class="menu-opt">25K/12.5K</div></div>
-    <div class="list-item"><div class="menu-id">7</div><div class="menu-name">TDR (Dual Watch)</div><div class="menu-opt">ON/OFF</div></div>
-    <div class="list-item"><div class="menu-id">10</div><div class="menu-name">R-DCS (Rec Tone)</div><div class="menu-opt">Digital</div></div>
-    <div class="list-item"><div class="menu-id">11</div><div class="menu-name">R-CTCS (Rec Tone)</div><div class="menu-opt">67.0-254.1</div></div>
-    <div class="list-item"><div class="menu-id">13</div><div class="menu-name">T-CTCS (TX Tone)</div><div class="menu-opt">67.0-254.1</div></div>
-    <div class="list-item"><div class="menu-id">14</div><div class="menu-name">VOICE (Prompts)</div><div class="menu-opt">ENG/OFF</div></div>
-    <div class="list-item"><div class="menu-id">21</div><div class="menu-name">MDF-A (Display A)</div><div class="menu-opt">NAME/FREQ</div></div>
-    <div class="list-item"><div class="menu-id">22</div><div class="menu-name">MDF-B (Display B)</div><div class="menu-opt">NAME/FREQ</div></div>
-    <div class="list-item"><div class="menu-id">27</div><div class="menu-name">MEM-CH (Store)</div><div class="menu-opt">000-127</div></div>
-    <div class="list-item"><div class="menu-id">28</div><div class="menu-name">DEL-CH (Delete)</div><div class="menu-opt">000-127</div></div>
-    <div class="list-item"><div class="menu-id">33</div><div class="menu-name">BAND (VHF/UHF)</div><div class="menu-opt">136/400</div></div>
-    <div class="list-item"><div class="menu-id">40</div><div class="menu-name">RESET (Factor)</div><div class="menu-opt">VFO/ALL</div></div>
-    <div class="list-item"><div class="menu-id">41</div><div class="menu-name">Bluetooth (Mini)</div><div class="menu-opt">ON/OFF</div></div>
-    <div class="list-item"><div class="menu-id">42</div><div class="menu-name">Wireless CPS</div><div class="menu-opt">App Link</div></div>
+<div class="section-label">📘 Reference Manual (PDF Data)</div>
+<div class="card" id="manualZone">
+    <details>
+        <summary>Basic Operations</summary>
+        <div class="content">
+            • <b>Power:</b> Rotate [Volume/Power] knob clockwise[cite: 105].<br>
+            • <b>VFO/MR Toggle:</b> Press <code>V/M</code> button to switch between Frequency and Channel mode[cite: 115, 123].<br>
+            • <b>Keypad Lock:</b> Long-press <code>*</code> to lock/unlock[cite: 110].<br>
+            • <b>A/B Switch:</b> Press <code>A/B</code> to toggle the main/sub bands[cite: 121, 124].
+        </div>
+    </details>
+
+    <details>
+        <summary>Menu Shortcuts (0-27)</summary>
+        <div class="content">
+            • <b>Menu 0:</b> SQL (Squelch) - Level 0-9[cite: 184].<br>
+            • <b>Menu 1:</b> STEP - 2.5K to 100K[cite: 183].<br>
+            • <b>Menu 2:</b> TXP (Power) - High/Low[cite: 129, 213, 214].<br>
+            • <b>Menu 15:</b> Dual Watch - Monitor A/B at once [cite: 146-151, 201, 202].<br>
+            • <b>Menu 27:</b> MEM-CH - Store channel[cite: 118, 119, 232].<br>
+            • <b>Menu 28:</b> DEL-CH - Delete channel[cite: 233].
+        </div>
+    </details>
+
+    <details>
+        <summary>Weather Channels (NOAA)</summary>
+        <div class="content">
+            • <b>CH-01:</b> 162.550 MHz<br>
+            • <b>CH-02:</b> 162.400 MHz<br>
+            • <b>CH-03:</b> 162.475 MHz<br>
+            • <b>CH-07:</b> 162.525 MHz<br>
+            <i>Note: These are receive-only channels[cite: 156].</i>
+        </div>
+    </details>
+
+    <details>
+        <summary>Technical Specifications</summary>
+        <div class="content">
+            • <b>Frequency Range:</b> VHF 136-174MHz / UHF 400-520MHz[cite: 80, 181, 182].<br>
+            • <b>Memory:</b> 999 Channels[cite: 80, 181, 182, 368].<br>
+            • <b>Power Output:</b> 5W / 2W[cite: 80, 365].<br>
+            • <b>Battery:</b> 7.4V DC[cite: 181, 182].
+        </div>
+    </details>
 </div>
 
 <script>
-    function filter() {
-        let input = document.getElementById('menuSearch').value.toUpperCase();
-        let items = document.getElementById('menuList').getElementsByClassName('list-item');
-        for (let i = 0; i < items.length; i++) {
-            let txt = items[i].innerText;
-            items[i].style.display = txt.toUpperCase().includes(input) ? "flex" : "none";
-        }
+    function doSearch() {
+        let q = document.getElementById('search').value.toUpperCase();
+        let items = document.querySelectorAll('.row, details');
+        items.forEach(item => {
+            let text = item.innerText.toUpperCase();
+            item.style.display = text.includes(q) ? "" : "none";
+            // Auto-expand details if searching inside them
+            if(item.tagName === 'DETAILS' && q.length > 2 && text.includes(q)) {
+                item.open = true;
+            } else if (item.tagName === 'DETAILS' && q.length === 0) {
+                item.open = false;
+            }
+        });
     }
     if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
 </script>
