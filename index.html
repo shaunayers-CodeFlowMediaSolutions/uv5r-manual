@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>UV-5R Mini Pro</title>
     <style>
-        /* Base Light Theme */
         :root {
             --bg: #f2f2f7;
             --accent: #ff9500;
@@ -19,7 +18,6 @@
             --border: #f2f2f7;
         }
 
-        /* Automatic Dark Mode Colors */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #000000;
@@ -37,19 +35,13 @@
 
         body { 
             font-family: -apple-system, system-ui, sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text-main);
+            background-color: var(--bg); color: var(--text-main);
             margin: 0; padding: env(safe-area-inset-top) 16px 40px 16px;
             overscroll-behavior: none;
-            transition: background-color 0.3s ease;
         }
 
-        .header {
-            position: sticky; top: 0; background: var(--bg);
-            padding: 20px 0 10px 0; z-index: 100;
-        }
-
-        h1 { font-size: 28px; font-weight: 700; margin: 0 0 10px 0; letter-spacing: -0.5px; }
+        .header { position: sticky; top: 0; background: var(--bg); padding: 20px 0 10px 0; z-index: 100; }
+        h1 { font-size: 24px; font-weight: 700; margin: 0 0 10px 0; }
 
         .search-container {
             background: var(--search-bg); border-radius: 10px;
@@ -63,70 +55,60 @@
 
         .section-label {
             font-size: 13px; color: var(--text-muted);
-            text-transform: uppercase; margin: 25px 0 8px 4px; font-weight: 600;
+            text-transform: uppercase; margin: 20px 0 8px 4px; font-weight: 600;
         }
 
-        .card {
-            background: var(--card-bg); border-radius: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2); overflow: hidden;
-            margin-bottom: 12px;
-        }
+        .card { background: var(--card-bg); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); overflow: hidden; margin-bottom: 12px; }
 
-        .list-item {
-            display: flex; align-items: center; padding: 16px;
-            border-bottom: 0.5px solid var(--border);
-        }
-
+        .list-item { display: flex; align-items: center; padding: 14px 16px; border-bottom: 0.5px solid var(--border); }
         .list-item:last-child { border-bottom: none; }
 
-        .menu-id {
-            background: var(--accent); color: #000;
-            font-weight: 800; min-width: 32px; height: 32px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 8px; margin-right: 15px; font-size: 14px;
-        }
+        .menu-id { background: var(--accent); color: #000; font-weight: 800; min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; margin-right: 15px; font-size: 13px; }
+        .menu-name { flex-grow: 1; font-weight: 500; font-size: 15px; }
+        .menu-opt { color: var(--accent); font-size: 13px; text-align: right; font-weight: 600; }
 
-        .menu-name { flex-grow: 1; font-weight: 500; font-size: 16px; }
-        .menu-opt { color: var(--accent); font-size: 14px; text-align: right; font-weight: 600; }
-
-        .badge {
-            background: #34c759; color: white; padding: 2px 8px;
-            border-radius: 6px; font-size: 12px; font-weight: 600;
-        }
-        
-        code { font-family: monospace; background: var(--search-bg); padding: 2px 4px; border-radius: 4px; }
+        code { font-family: monospace; background: var(--search-bg); padding: 2px 5px; border-radius: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>UV-5R Mini</h1>
+    <h1>UV-5R Mini Field Guide</h1>
     <div class="search-container">
-        <input type="text" id="menuSearch" onkeyup="filter()" placeholder="Search settings...">
+        <input type="text" id="menuSearch" onkeyup="filter()" placeholder="Search (e.g. 'SQL', 'Tone', '13')...">
     </div>
 </div>
 
-<div class="section-label">Quick Reference</div>
+<div class="section-label">Quick Actions</div>
 <div class="card">
-    <div class="list-item">
-        <div class="menu-name">Radio Unlock</div>
-        <div class="menu-opt">Hold <code>*</code></div>
-    </div>
-    <div class="list-item">
-        <div class="menu-name">Weather Mode</div>
-        <div class="menu-opt"><span class="badge">NOAA</span> Hold <code>0</code></div>
-    </div>
+    <div class="list-item"><div class="menu-name">Unlock Keypad</div><div class="menu-opt">Hold <code>*</code> or <code>#</code></div></div>
+    <div class="list-item"><div class="menu-name">VFO/Memory Mode</div><div class="menu-opt">Press <code>VFO/MR</code></div></div>
+    <div class="list-item"><div class="menu-name">Weather Mode</div><div class="menu-opt">Hold <code>0</code></div></div>
+    <div class="list-item"><div class="menu-name">Start Scan</div><div class="menu-opt">Hold <code>*</code></div></div>
+    <div class="list-item"><div class="menu-name">FM Radio</div><div class="menu-opt">Press <code>CALL</code></div></div>
 </div>
 
-<div class="section-label">Menu Settings</div>
+<div class="section-label">Full Menu Reference</div>
 <div class="card" id="menuList">
-    <div class="list-item"><div class="menu-id">00</div><div class="menu-name">Squelch (SQL)</div><div class="menu-opt">0-9</div></div>
-    <div class="list-item"><div class="menu-id">01</div><div class="menu-name">Step (STEP)</div><div class="menu-opt">2.5K-50K</div></div>
-    <div class="list-item"><div class="menu-id">02</div><div class="menu-name">TX Power (TXP)</div><div class="menu-opt">HIGH / LOW</div></div>
-    <div class="list-item"><div class="menu-id">07</div><div class="menu-name">Dual Watch (TDR)</div><div class="menu-opt">ON / OFF</div></div>
-    <div class="list-item"><div class="menu-id">13</div><div class="menu-name">Transmit Tone</div><div class="menu-opt">CTCSS</div></div>
-    <div class="list-item"><div class="menu-id">27</div><div class="menu-name">Memory Save</div><div class="menu-opt">CH 0-127</div></div>
-    <div class="list-item"><div class="menu-id">41</div><div class="menu-name">Bluetooth</div><div class="menu-opt">On/Off</div></div>
+    <div class="list-item"><div class="menu-id">0</div><div class="menu-name">SQL (Squelch)</div><div class="menu-opt">0-9</div></div>
+    <div class="list-item"><div class="menu-id">1</div><div class="menu-name">STEP (Freq Step)</div><div class="menu-opt">2.5K-50K</div></div>
+    <div class="list-item"><div class="menu-id">2</div><div class="menu-name">TXP (TX Power)</div><div class="menu-opt">HIGH/LOW</div></div>
+    <div class="list-item"><div class="menu-id">3</div><div class="menu-name">SAVE (Bat Save)</div><div class="menu-opt">1:1-1:4</div></div>
+    <div class="list-item"><div class="menu-id">4</div><div class="menu-name">VOX (Voice Act)</div><div class="menu-opt">OFF-10</div></div>
+    <div class="list-item"><div class="menu-id">5</div><div class="menu-name">W/N (Wide/Narr)</div><div class="menu-opt">25K/12.5K</div></div>
+    <div class="list-item"><div class="menu-id">7</div><div class="menu-name">TDR (Dual Watch)</div><div class="menu-opt">ON/OFF</div></div>
+    <div class="list-item"><div class="menu-id">10</div><div class="menu-name">R-DCS (Rec Tone)</div><div class="menu-opt">Digital</div></div>
+    <div class="list-item"><div class="menu-id">11</div><div class="menu-name">R-CTCS (Rec Tone)</div><div class="menu-opt">67.0-254.1</div></div>
+    <div class="list-item"><div class="menu-id">13</div><div class="menu-name">T-CTCS (TX Tone)</div><div class="menu-opt">67.0-254.1</div></div>
+    <div class="list-item"><div class="menu-id">14</div><div class="menu-name">VOICE (Prompts)</div><div class="menu-opt">ENG/OFF</div></div>
+    <div class="list-item"><div class="menu-id">21</div><div class="menu-name">MDF-A (Display A)</div><div class="menu-opt">NAME/FREQ</div></div>
+    <div class="list-item"><div class="menu-id">22</div><div class="menu-name">MDF-B (Display B)</div><div class="menu-opt">NAME/FREQ</div></div>
+    <div class="list-item"><div class="menu-id">27</div><div class="menu-name">MEM-CH (Store)</div><div class="menu-opt">000-127</div></div>
+    <div class="list-item"><div class="menu-id">28</div><div class="menu-name">DEL-CH (Delete)</div><div class="menu-opt">000-127</div></div>
+    <div class="list-item"><div class="menu-id">33</div><div class="menu-name">BAND (VHF/UHF)</div><div class="menu-opt">136/400</div></div>
+    <div class="list-item"><div class="menu-id">40</div><div class="menu-name">RESET (Factor)</div><div class="menu-opt">VFO/ALL</div></div>
+    <div class="list-item"><div class="menu-id">41</div><div class="menu-name">Bluetooth (Mini)</div><div class="menu-opt">ON/OFF</div></div>
+    <div class="list-item"><div class="menu-id">42</div><div class="menu-name">Wireless CPS</div><div class="menu-opt">App Link</div></div>
 </div>
 
 <script>
